@@ -17,11 +17,8 @@
         <div style="font-size: 100px;">
             <i class="fa-regular fa-keyboard"></i>
         </div>
-        <button class="button" role="button" onclick="StartGame()">Start</button>
+        <button id="start-button" class="button" role="button">Start</button>
         <p><span id="seconds">00</span>:<span id="tens">00</span></p>
-        <button id="button-start">Start</button>
-        <button id="button-stop">Stop</button>
-        <button id="button-reset">Reset</button>
         <br>
         <textarea name="initial-text" id="initial-text" cols="30" rows="10" readonly></textarea>
         <textarea name="text-to-be-written" id="text-to-be-written" cols="30" rows="10" onkeyup="CheckFinal()"></textarea>

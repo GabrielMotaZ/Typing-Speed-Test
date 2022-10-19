@@ -1,55 +1,57 @@
-isTyping = false;
-time = 0;
-
-function StartGame() {
-    var finalString = "";
-    var min = 0;
-    var max = wordList.length;
-    for (let i = 0; i < 30; i++) {
-        finalString += wordList[Math.floor(Math.random() * (max - min + 1) + min)] + " ";
-    }
-    $("#initial-text").val(finalString);
-
-    $("textarea").height(0);
-    $("textarea").height( $("textarea")[0].scrollHeight );
-}
-
-function CheckFinal() {
-    initialText = $("#initial-text").val();
-    inputedText = $("#text-to-be-written").val();
-
-    if(initialText === inputedText) {
-        console.log("Finished");
-    }
-}
-
 window.onload = function () { // implement as stopwatch after first click keydown in text-to-be-written
-  
+    needReset = true;
+
     var seconds = 00; 
     var tens = 00; 
     var appendTens = document.getElementById("tens")
     var appendSeconds = document.getElementById("seconds")
-    var buttonStart = document.getElementById('button-start');
-    var buttonStop = document.getElementById('button-stop');
-    var buttonReset = document.getElementById('button-reset');
+    var buttonStart = document.getElementById('start-button');
+    var initialText = document.getElementById('initial-text');
+    var finalText = document.getElementById('text-to-be-written');
     var Interval ;
-  
+
     buttonStart.onclick = function() {
-        clearInterval(Interval);
-        Interval = setInterval(startTimer, 10);
-    }
-    
-    buttonStop.onclick = function() {
-        clearInterval(Interval);
-    }
-    
-  
-    buttonReset.onclick = function() {
+        var finalString = "";
+        var min = 0;
+        var max = wordList.length;
+        for (let i = 0; i < 30; i++) {
+            finalString += wordList[Math.floor(Math.random() * (max - min + 1) + min)];
+            if(i != 29) {
+                finalString += " "
+            }
+        }
+        $("#initial-text").val(finalString);
+
+        $("textarea").height(0);
+        $("textarea").height( $("textarea")[0].scrollHeight );
+
         clearInterval(Interval);
         tens = "00";
         seconds = "00";
         appendTens.innerHTML = tens;
         appendSeconds.innerHTML = seconds;
+
+        needReset = false;
+        $("#text-to-be-written").prop('readonly', needReset);
+        $("#text-to-be-written").val("");
+    }
+
+    finalText.onkeyup = function() {
+        initialText = $("#initial-text").val();
+        inputedText = $("#text-to-be-written").val();
+        
+        if(initialText === inputedText) {
+            needReset = true;
+            $("#text-to-be-written").prop('readonly', needReset);
+            clearInterval(Interval);
+        }
+    }
+  
+    finalText.onkeydown = function() {
+        if(!needReset) {
+            clearInterval(Interval);
+            Interval = setInterval(startTimer, 10);
+        }
     }
     
     function startTimer () {
@@ -65,7 +67,6 @@ window.onload = function () { // implement as stopwatch after first click keydow
         } 
         
         if (tens > 99) {
-            console.log("seconds");
             seconds++;
             appendSeconds.innerHTML = "0" + seconds;
             tens = 0;
