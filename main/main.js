@@ -10,8 +10,8 @@ window.onload = function () { // implement as stopwatch after first click keydow
     var finalText = document.getElementById('text-to-be-written');
     var Interval ;
 
-    buttonStart.onclick = function() {
-        var finalString = "";
+    buttonStart.onclick = function() { // on button start click, clear time, change text to be written
+        var finalString = ""; // generating random words
         var min = 0;
         var max = wordList.length;
         for (let i = 0; i < 30; i++) {
@@ -20,23 +20,23 @@ window.onload = function () { // implement as stopwatch after first click keydow
                 finalString += " "
             }
         }
-        $("#initial-text").val(finalString);
+        $("#initial-text").val(finalString); // fill text to be written
 
-        $("textarea").height(0);
+        $("textarea").height(0); // change textarea size
         $("textarea").height( $("textarea")[0].scrollHeight );
 
-        clearInterval(Interval);
+        clearInterval(Interval); // reset timer
         tens = "00";
         seconds = "00";
         appendTens.innerHTML = tens;
         appendSeconds.innerHTML = seconds;
 
-        needReset = false;
+        needReset = false; // enable timer to be started
         $("#text-to-be-written").prop('readonly', needReset);
         $("#text-to-be-written").val("");
     }
 
-    finalText.onkeyup = function() {
+    finalText.onkeyup = function(evt) {  // check if initial text is the same as inputed text
         initialText = $("#initial-text").val();
         inputedText = $("#text-to-be-written").val();
         
@@ -45,16 +45,27 @@ window.onload = function () { // implement as stopwatch after first click keydow
             $("#text-to-be-written").prop('readonly', needReset);
             clearInterval(Interval);
         }
+
+        initialText = $("#initial-text").val().split(" ");
+        inputedText = $("#text-to-be-written").val().split(" ");
+
+        if(evt.key == " ") {
+            for (let i = 0; i < inputedText.length; i++) {
+                if(inputedText[i] != initialText[i]) {
+                    console.log("Error" + initialText[i])
+                }
+            }
+        }
     }
   
-    finalText.onkeydown = function() {
+    finalText.onkeydown = function(evt) { // if doesn't need reset, start timer
         if(!needReset) {
             clearInterval(Interval);
             Interval = setInterval(startTimer, 10);
         }
     }
     
-    function startTimer () {
+    function startTimer () { // start timer
         tens++; 
     
         if(tens <= 9){
