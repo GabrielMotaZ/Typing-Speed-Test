@@ -40,21 +40,31 @@ window.onload = function () { // implement as stopwatch after first click keydow
         initialText = $("#initial-text").val();
         inputedText = $("#text-to-be-written").val();
         
-        if(initialText === inputedText) {
+        if(initialText === inputedText && !needReset) {
             needReset = true;
             $("#text-to-be-written").prop('readonly', needReset);
             clearInterval(Interval);
-        }
 
-        initialText = $("#initial-text").val().split(" ");
-        inputedText = $("#text-to-be-written").val().split(" ");
 
-        if(evt.key == " ") {
+            initialText = $("#initial-text").val().split(" ");
+            inputedText = $("#text-to-be-written").val().split(" ");
+
+            let wordCounter = 0;
+            let letterPerMinute = 0;
+            let wordPerMinute = 0;
+            let wrongLetters = 0;
+
             for (let i = 0; i < inputedText.length; i++) {
-                if(inputedText[i] != initialText[i]) {
-                    console.log("Error" + initialText[i])
+                if(inputedText[i] == initialText[i]) {
+                    wordCounter += 1;
+                } 
+                else {
+                    wrongLetters += 1;
                 }
             }
+
+            wordPerMinute = 60 * wordCounter / appendSeconds.innerHTML;
+            letterPerMinute = 60 * $("#initial-text").val().length / appendSeconds.innerHTML;
         }
     }
   
