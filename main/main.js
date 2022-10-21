@@ -14,7 +14,7 @@ window.onload = function () { // implement as stopwatch after first click keydow
         var finalString = ""; // generating random words
         var min = 0;
         var max = wordList.length;
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 20; i++) {
             finalString += wordList[Math.floor(Math.random() * (max - min + 1) + min)];
             if(i != 29) {
                 finalString += " "
@@ -34,13 +34,19 @@ window.onload = function () { // implement as stopwatch after first click keydow
         needReset = false; // enable timer to be started
         $("#text-to-be-written").prop('readonly', needReset);
         $("#text-to-be-written").val("");
+
+        $("#words-per-minute").text("");
+        $("#characters-per-minute").text("");
     }
 
     finalText.onkeyup = function(evt) {  // check if initial text is the same as inputed text
         initialText = $("#initial-text").val();
         inputedText = $("#text-to-be-written").val();
-        
-        if(initialText === inputedText && !needReset) {
+
+        var listInitial = initialText.split(" ")
+        var listInputed = inputedText.split(" ")
+
+        if(listInitial[listInitial.length - 2] === listInputed[listInputed.length - 1] && !needReset) {
             needReset = true;
             $("#text-to-be-written").prop('readonly', needReset);
             clearInterval(Interval);
@@ -63,8 +69,11 @@ window.onload = function () { // implement as stopwatch after first click keydow
                 }
             }
 
-            wordPerMinute = 60 * wordCounter / appendSeconds.innerHTML;
-            letterPerMinute = 60 * $("#initial-text").val().length / appendSeconds.innerHTML;
+            var finalSeconds = parseFloat(appendSeconds.innerHTML + "." + appendTens.innerHTML);
+            wordPerMinute = Number(Math.round((60 * wordCounter / finalSeconds)+'e'+2)+'e-'+2);
+            $("#words-per-minute").text(wordPerMinute);
+            letterPerMinute = Number(Math.round(60 * $("#initial-text").val().length / finalSeconds+'e'+2)+'e-'+2);
+            $("#characters-per-minute").text(letterPerMinute);
         }
     }
   
