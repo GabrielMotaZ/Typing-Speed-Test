@@ -79,3 +79,21 @@ textarea {
     font-size: 16px;
     resize: none;
 }
+
+input, label {
+    display: block
+}
+
+#word-number {
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    font-family: 'Abel';
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 5px;
+    width: 25px;
+    min-width: 25px;
+}

@@ -14,7 +14,8 @@ window.onload = function () { // implement as stopwatch after first click keydow
         var finalString = ""; // generating random words
         var min = 0;
         var max = wordList.length;
-        for (let i = 0; i < 20; i++) {
+        var wordNumber = $("#word-number").val();
+        for (let i = 0; i < wordNumber; i++) {
             finalString += wordList[Math.floor(Math.random() * (max - min + 1) + min)];
             if(i != 29) {
                 finalString += " "
@@ -56,23 +57,25 @@ window.onload = function () { // implement as stopwatch after first click keydow
             inputedText = $("#text-to-be-written").val().split(" ");
 
             let wordCounter = 0;
+            let letterCounter = 0;
             let letterPerMinute = 0;
             let wordPerMinute = 0;
-            let wrongLetters = 0;
+            let wordWrong = 0;
 
             for (let i = 0; i < inputedText.length; i++) {
                 if(inputedText[i] == initialText[i]) {
                     wordCounter += 1;
+                    letterCounter += inputedText[i].length
                 } 
                 else {
-                    wrongLetters += 1;
+                    wordWrong += 1;
                 }
             }
 
             var finalSeconds = parseFloat(appendSeconds.innerHTML + "." + appendTens.innerHTML);
             wordPerMinute = Number(Math.round((60 * wordCounter / finalSeconds)+'e'+2)+'e-'+2);
             $("#words-per-minute").text(wordPerMinute);
-            letterPerMinute = Number(Math.round(60 * $("#initial-text").val().length / finalSeconds+'e'+2)+'e-'+2);
+            letterPerMinute = Number(Math.round(60 * letterCounter / finalSeconds+'e'+2)+'e-'+2);
             $("#characters-per-minute").text(letterPerMinute);
         }
     }

@@ -17,9 +17,10 @@
         <div style="font-size: 100px;">
             <i class="fa-regular fa-keyboard"></i>
         </div>
+        <label for="word-number">How many words?</label>
+        <input type="text" onkeyup="this.style.width = (this.value.length) + 'ch';" name="word-number" id="word-number" value="20">
         <button id="start-button" class="button" role="button">Start</button>
         <p><span id="seconds">00</span>:<span id="tens">00</span></p>
-        <br>
         <textarea name="initial-text" id="initial-text" cols="30" rows="10" readonly></textarea>
         <textarea name="text-to-be-written" id="text-to-be-written" cols="30" rows="10"></textarea>
         <br>
